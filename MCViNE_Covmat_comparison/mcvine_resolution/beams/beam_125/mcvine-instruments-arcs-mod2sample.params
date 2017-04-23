@@ -1,0 +1,1 @@
+{"mcvine": {"version": "v1.2", "git_revision": "c7b36f689fe2780433de93b8ccfd0177cee8ba17"}, "cmd": "mcvine instruments arcs mod2sample", "params": {}, "args": ["--ncount=1000000.0", "--buffer_size=100000", "--output-dir=_m2sout", "--moderator.S_filename=/SNS/users/lj7/software/miniconda2/envs/mcvine/share/mcvine/resources/instruments/ARCS/moderator/source_sct521_bu_17_1.dat"]}

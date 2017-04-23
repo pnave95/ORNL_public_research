@@ -1,0 +1,1 @@
+{"mcvine": {"version": "v1.2", "git_revision": "c7b36f689fe2780433de93b8ccfd0177cee8ba17"}, "cmd": "mcvine instruments arcs m2s", "params": {}, "args": ["--with_moderator_angling=True", "--E=1000.0", "--T0_nu=60.0", "--emission_time=-1.0", "--fermi_nu=600.0", "--fermi_chopper=100-1.5-SMI", "---", "-dump-pml=yes", "-h"]}

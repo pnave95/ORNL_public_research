@@ -11,6 +11,7 @@ import histogram as H, histogram.hdf as hh
 
 from matplotlib import pyplot as plt
 import pandas as pd
+import os
 
 import find_E_Q_pairs_for_various_Ei as get_Eq_pairs
 
@@ -38,6 +39,18 @@ pixel = use_covmat.pixel(
 # Given a list of Ei values, along with an hkl point and slice direction, find measurable (by ARCS) E,Q points
 def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
     all_pairs = get_Eq_pairs.compute_E_dq_pairs_for_Ei_list(Ei_Values, hkl0, hkl_dir)
+
+    # make a directory to record all results
+    workdir = os.getcwd()  # current working directory
+    newdir = "covmat_results_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
+    newdirpath = workdir + "/" + newdir
+
+    try:
+        os.mkdir(newdirpath)
+    except:
+        cmd = "rm -r " + newdir
+        os.system(cmd)
+        os.mkdir(newdirpath)
 
     # create list to collect results
     data = []
@@ -86,7 +99,8 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
                 plt.figure()
                 plt.plot(u[:,0], u[:,1], '.')
                 figtitle = "covmat_ellipse_Ei=" + str(Ei) + ", E=" + str(dynamics.E) + ", dq=" + str(dynamics.dq) + ".png"
-                plt.savefig(figtitle)
+                figpath = newdir + "/" + figtitle
+                plt.savefig(figpath)
 
                 # debug:
                 # print "Ei, E, dq = " + str(Ei) + ", " + str(dynamics.E) + ", " + str(dynamics.dq) + ".  Unscaled covariance matrix: \n"
@@ -114,7 +128,9 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
     data = np.array(data)
     print "data.shape = " + str(data.shape)
     df = pd.DataFrame(data=data, columns=['Ei', 'E', 'dq', 'E_width'])
-    df.to_csv('covmat_data.csv', index=False)
+    localpath = newdir + "/covmat_data.csv"
+    #df.to_csv('covmat_data.csv', index=False)
+    df.to_csv(localpath, index=False)
 
 
     # plot E vs Ewidth for each value of Ei
@@ -127,7 +143,8 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
         plt.xlabel("E (meV)")
         plt.ylabel("E width (meV)")
         figtitle = "Energy vs Energy Width for Ei=" + str(Ei) + ".png"
-        plt.savefig(figtitle)
+        figpath = newdir + "/" + figtitle
+        plt.savefig(figpath)
 
 
     return df
