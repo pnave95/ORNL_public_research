@@ -151,14 +151,10 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
 
 
-#def plot_E_vs_Ewidth_for_all_Ei_values(df):
-
-
-
 if __name__ == '__main__':
 
     Ei_Values = np.array([30., 60., 125., 250., 500., 1000.])
-    hkl0 = np.array([0., 0., 0.])
-    hkl_dir = np.array([1,0,0])
+    hkl0 = np.array([-16/3., -8/3., 8/3.])
+    hkl_dir = np.array([-1.,1.,-1.])
 
     df = _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)
