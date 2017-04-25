@@ -1,0 +1,1 @@
+{"mcvine": {"version": "v1.2", "git_revision": "c7b36f689fe2780433de93b8ccfd0177cee8ba17"}, "cmd": "mcvine instruments arcs beam", "params": {}, "args": ["-E=1000", "--ncount=1e9"]}

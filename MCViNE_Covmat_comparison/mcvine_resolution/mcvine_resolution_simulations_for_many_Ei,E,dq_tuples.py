@@ -55,7 +55,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
         # find appropriate mcvine beam simulation
         s = str(Ei)
         Ei_str = s[:s.index('.')]  # get the integer value of Ei as a string
-        beam = "/SNS/users/p63/ORNL_public_research/MCViNE_Covmat_comparison/mcvine_resolution/beams/beam_" + Ei_str
+        beam = "/SNS/users/p63/ORNL_public_research/MCViNE_Covmat_comparison/mcvine_resolution/beams/beam_" + Ei_str + "_1e9"
 
 
 
@@ -91,14 +91,16 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
             # the code which computes the "measurable" E,dq points is not perfect and sometimes produces points which don't work; hence we "try" to use these points
             try:
 
-                use_res_comps.setup('out.res_comps_tmp', sampleyml, beam, dynamics.E, dynamics.hkl0, dynamics.hkl_dir, scan, instrument, pixel)
+                hkl = dynamics.hkl0 + dynamics.hkl_dir*dynamics.dq
 
-                resultsdir = workdir + "/out.res_comps_tmp/"
-                downdircmd = "cd " + resultsdir
-                updircmd = "cd " + workdir
-                os.system(downdircmd)  # change to out.res_comps_tmp directory
+                use_res_comps.setup('out.res_comps_tmp', sampleyml, beam, dynamics.E, hkl, dynamics.hkl_dir, scan, instrument, pixel)
+
+                resultsdir = workdir + "/out.res_comps_tmp"
+                os.chdir(resultsdir)
+                #cmd = "python out.res_comps_tmp/run.py > out.res_comps_tmp/log.run"
                 os.system("python run.py > log.run")
-                os.system(updircmd)  # change back to original working directory
+                #os.system(cmd)
+                os.chdir(workdir)  # change back to original working directory
 
                 res = hh.load('out.res_comps_tmp/res.h5')
                 q = res.x 
@@ -108,6 +110,8 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
                 Eg, qg = np.mgrid[slice(E[0], E[-1]+dE/2, E[1]-E[0]), slice(q[0], q[-1]+dq/2, q[1]-q[0])]
 
 
+                # debug:
+                print "Succeeded with computations!  Starting to plot...\n"
                 plt.figure()
                 plt.pcolormesh(qg, Eg, res.I.T, cmap='viridis')
                 plt.xlim(-0.4,0.2)
@@ -115,6 +119,8 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
                 plt.colorbar()
                 figtitle = "mcvine_res_sim_Ei=" + str(Ei) + ", E=" + str(dynamics.E) + ", dq=" + str(dynamics.dq) + ".png"
                 plt.savefig(figtitle)
+                # debug:
+                print "Finished plotting!\n"
 
 
                 # find E width of ellipse
