@@ -17,4 +17,4 @@ E = 15.0
 hkl_projection = array([1, 0, 0])
 urc.run(
     beam_neutrons_path, instrument, samplexmlpath, psi, hkl2Q, pixel, t_m2p,
-    Q, E, hkl_projection, Nbuffer=1000)
+    Q, E, hkl_projection, Nbuffer=100000)

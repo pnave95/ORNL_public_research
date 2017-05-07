@@ -47,15 +47,28 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
     # record current working directory
     workdir = os.getcwd()
 
+    # create new directory to store results (WARNING: this may fail if the directory already exists)
+    newdir = "mcvine_res_sim_hkl0=" + str(hkl0_passed) + "__hkl_dir=" + str(hkl_dir_passed)
+
+    os.mkdir(newdir)
+    newworkdir = workdir + "/" + newdir
+    #os.chdir(newworkdir)
+
+
+    # create counter for creating results files
+    counter = 1
+
     # loop through Ei values
     for i in range(len(EiValues)):
         Ei = EiValues[i]   
         Eq_pairs = all_pairs[i]
 
+
         # find appropriate mcvine beam simulation
         s = str(Ei)
         Ei_str = s[:s.index('.')]  # get the integer value of Ei as a string
         beam = "/SNS/users/p63/ORNL_public_research/MCViNE_Covmat_comparison/mcvine_resolution/beams/beam_" + Ei_str + "_1e9"
+
 
 
 
@@ -93,16 +106,37 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
                 hkl = dynamics.hkl0 + dynamics.hkl_dir*dynamics.dq
 
-                use_res_comps.setup('out.res_comps_tmp', sampleyml, beam, dynamics.E, hkl, dynamics.hkl_dir, scan, instrument, pixel)
+                # make directory to save results
+                #outdir = "out.res_comps_Ei=" + Ei_str + "__E=" + str(dynamics.E) + "__dq=" + str(dynamics.dq)
+                outdir1 = "out.res_comps_tmp" + str(counter)
+                outdir = newdir + "/" + outdir1
+                #outdir = newdir + "/out.res_comps_tmp" + str(counter)
+                #counter += 1
 
-                resultsdir = workdir + "/out.res_comps_tmp"
+                #use_res_comps.setup('out.res_comps_tmp', sampleyml, beam, dynamics.E, hkl, dynamics.hkl_dir, scan, instrument, pixel)
+                use_res_comps.setup(outdir, sampleyml, beam, dynamics.E, hkl, dynamics.hkl_dir, scan, instrument, pixel)
+                counter += 1
+
+            except:
+                print "Failed to use res_comps.setup (counter = " + str(counter) + "), while current directory = " + str(os.getcwd())
+
+            try:
+                # debug:
+                print "used res_comps.setup successfully"
+
+                #resultsdir = workdir + "/out.res_comps_tmp"
+                resultsdir = workdir + "/" + outdir
+                #resultsdir = newworkdir + "/" + outdir
                 os.chdir(resultsdir)
                 #cmd = "python out.res_comps_tmp/run.py > out.res_comps_tmp/log.run"
                 os.system("python run.py > log.run")
                 #os.system(cmd)
                 os.chdir(workdir)  # change back to original working directory
+                #os.chdir(newworkdir)
 
-                res = hh.load('out.res_comps_tmp/res.h5')
+                #res = hh.load('out.res_comps_tmp/res.h5')
+                resfile = outdir + "/res.h5" 
+                res = hh.load(resfile)
                 q = res.x 
                 E = res.E
                 dE = E[1]-E[0]
@@ -118,9 +152,18 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
                 plt.ylim(-10,7)
                 plt.colorbar()
                 figtitle = "mcvine_res_sim_Ei=" + str(Ei) + ", E=" + str(dynamics.E) + ", dq=" + str(dynamics.dq) + ".png"
-                plt.savefig(figtitle)
+                figpath = newdir + "/" + figtitle
+                #plt.savefig(figtitle)
+                plt.savefig(figpath)
                 # debug:
                 print "Finished plotting!\n"
+
+
+                # rename results directory to something that makes more sense
+                command = "mv " + outdir1 + " out.res_comps_Ei_" + Ei_str + "__E_" + str(dynamics.E)
+                os.chdir(newworkdir)
+                os.system(command)
+                os.chdir(workdir)
 
 
                 # find E width of ellipse
@@ -166,8 +209,8 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
 if __name__ == '__main__':
 
-    #Ei_Values = np.array([30., 60., 125., 250., 500., 1000.])
-    Ei_Values = np.array([60.])
+    Ei_Values = np.array([30., 60., 125., 250., 500., 1000.])
+    #Ei_Values = np.array([60.])
     hkl0 = np.array([0., 0., 0.])
     hkl_dir = np.array([1,0,0])
 
