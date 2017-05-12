@@ -207,11 +207,36 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
 
 
+
+def _iterate_hkl0_points(EiValues, coord_range, hkl_direction):
+
+    # get lower and upper bounds for h,k, and l to range between
+    low = coord_range[0]
+    high = coord_range[1]
+
+    for h in coord_range:
+        for k in coord_range:
+            for l in coord_range:
+                try:
+                    hkl0 = np.array([h,k,l])
+                    _get_valid_E_Q_points(EiValues, hkl0, hkl_direction)
+                except:
+                    print "Failure occurred at hkl0 = " + str(hkl0)
+
+
 if __name__ == '__main__':
 
     Ei_Values = np.array([30., 60., 125., 250., 500., 1000.])
-    #Ei_Values = np.array([60.])
+
     hkl0 = np.array([0., 0., 0.])
-    hkl_dir = np.array([1,0,0])
+    hkl_dir = np.array([1.1,0,0])
+
+    #hkl0 = np.array([0., -0.5, 0.5.])
+    #hkl_dir = np.array([-1,1,-1])
+
+    # try iterating through h,k,l values to obtain lots of resolution simulations
+    #coord_range = np.arange(-10.,10.,0.5)
+    #_iterate_hkl0_points(Ei_Values, coord_range, hkl_dir)
+
 
     _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)

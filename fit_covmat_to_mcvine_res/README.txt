@@ -1,0 +1,1 @@
+The purpose of this directory and its contents is to optimize the parameters of the fast covariance method resolution estimation by fitting the produced covariance matrix to the covariance matrix obtained from the more intensive MCViNE resolution simulations.

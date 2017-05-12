@@ -81,8 +81,11 @@ def compute_E_dq_pairs_for_Ei_list(Ei_list, hkl0, hkl_dir, verbose=False):
 
     list_of_pairs = []
     for Ei in Ei_list:
-        pairs = compute_E_dq_pairs(Ei, hkl0, hkl_dir, verbose)
-        list_of_pairs.append(pairs)
+        #try:
+            pairs = compute_E_dq_pairs(Ei, hkl0, hkl_dir, verbose)
+            list_of_pairs.append(pairs)
+        #except:
+            #print "Failed to compute E,dq pairs for Ei=" + str(Ei)
 
     list_of_pairs = np.array(list_of_pairs)
     return list_of_pairs
