@@ -229,7 +229,7 @@ if __name__ == '__main__':
     Ei_Values = np.array([30., 60., 125., 250., 500., 1000.])
 
     hkl0 = np.array([0., 0., 0.])
-    hkl_dir = np.array([1.1,0,0])
+    hkl_dir = np.array([2,0,0])
 
     #hkl0 = np.array([0., -0.5, 0.5.])
     #hkl_dir = np.array([-1,1,-1])
