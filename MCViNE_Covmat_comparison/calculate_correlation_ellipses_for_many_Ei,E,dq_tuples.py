@@ -86,7 +86,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
             #samplethickness = 0.0015
 
             # compute covariance matrix (with revised parameters)
-            tofwidths = use_covmat.tofwidths(P=10.05,M=7.5)
+            tofwidths = use_covmat.tofwidths(P=10.5,M=7.5)
             beamdivs = use_covmat.beamdivs(theta = 0.015, phi = 0.015)
             samplethickness = 0.0005
 

@@ -217,7 +217,6 @@ def _iterate_hkl0_points(EiValues, coord_range, hkl_direction):
     for h in coord_range:
         for k in coord_range:
             for l in coord_range:
-                try:
                     hkl0 = np.array([h,k,l])
                     _get_valid_E_Q_points(EiValues, hkl0, hkl_direction)
                 except:
