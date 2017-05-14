@@ -13,7 +13,8 @@ import mcvine.cli
 # See NIMA 736(2014)31-39
 
 
-from . import instrument, pixel
+#from . import instrument, pixel
+from mcvine_workflow.singlextal.resolution import instrument, pixel
 class tofwidths:
 
     def __init__(self, P, M):

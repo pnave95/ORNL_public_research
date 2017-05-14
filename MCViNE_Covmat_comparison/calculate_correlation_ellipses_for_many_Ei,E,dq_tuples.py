@@ -42,7 +42,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
     # make a directory to record all results
     workdir = os.getcwd()  # current working directory
-    newdir = "covmat_results_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
+    newdir = "covmat_results2_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
     newdirpath = workdir + "/" + newdir
 
     try:
@@ -81,9 +81,14 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
 
             # compute covariance matrix
-            tofwidths = use_covmat.tofwidths(P=10,M=8)
-            beamdivs = use_covmat.beamdivs(theta = 0.01, phi = 0.01)
-            samplethickness = 0.0015
+            #tofwidths = use_covmat.tofwidths(P=10,M=8)
+            #beamdivs = use_covmat.beamdivs(theta = 0.01, phi = 0.01)
+            #samplethickness = 0.0015
+
+            # compute covariance matrix (with revised parameters)
+            tofwidths = use_covmat.tofwidths(P=10.05,M=7.5)
+            beamdivs = use_covmat.beamdivs(theta = 0.015, phi = 0.015)
+            samplethickness = 0.0005
 
             # the code which computes the "measurable" E,dq points is not perfect and sometimes produces points which don't work; hence we "try" to use these points
             try:
@@ -154,7 +159,10 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 if __name__ == '__main__':
 
     Ei_Values = np.array([30., 60., 125., 250., 500., 1000.])
-    hkl0 = np.array([-16/3., -8/3., 8/3.])
-    hkl_dir = np.array([-1.,1.,-1.])
+    #hkl0 = np.array([-16/3., -8/3., 8/3.])
+    #hkl_dir = np.array([-1.,1.,-1.])
+
+    hkl0 = np.array([0., 0., 0.])
+    hkl_dir = np.array([1.,0.,0.])
 
     df = _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)
