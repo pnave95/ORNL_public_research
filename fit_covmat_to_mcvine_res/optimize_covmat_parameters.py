@@ -235,6 +235,8 @@ def _optimize_parameters(numIters, paramList, paramHalfSteps, hkl_dir):
 			#paramList[j] -= (halfStep * partial)
 			paramList[j] -= halfStep * (partial / abs(partial))
 
+			print "paramListUpdated:  " + str(paramList)
+
 			#if (up_loss_avg < loss_avg) or (d_loss_avg < loss_avg):
 			#	if up_loss_avg < d_loss_avg:
 			#		paramList[j] += 
@@ -257,7 +259,7 @@ if __name__ == '__main__':
 	os.chdir(workdir)
 
 	#paramList = [[10, 8], [0.01, 0.01], 0.0015]
-	paramList = [10., 8., 0.01, 0.01, 0.0015]
+	paramList = [10.5, 7.5, 0.015, 0.015, 0.0005]
 	originalParamList = np.copy(np.array(paramList))
 	#paramHalfSteps = [[0.05, 0.05], [0.0005, 0.0005], 0.0001]
 	paramHalfSteps = [0.05, 0.05, 0.0005, 0.0005, 0.0001]
