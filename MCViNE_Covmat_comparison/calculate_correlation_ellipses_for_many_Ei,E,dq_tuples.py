@@ -42,7 +42,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
     # make a directory to record all results
     workdir = os.getcwd()  # current working directory
-    newdir = "covmat_results3_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
+    newdir = "covmat_results4_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
     newdirpath = workdir + "/" + newdir
 
     try:
@@ -87,8 +87,8 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
             #samplethickness = 0.0015
 
             # compute covariance matrix (with revised parameters)
-            tofwidths = use_covmat.tofwidths(P=10.8,M=7.2)
-            beamdivs = use_covmat.beamdivs(theta = 0.018, phi = 0.018)
+            tofwidths = use_covmat.tofwidths(P=12,M=6)
+            beamdivs = use_covmat.beamdivs(theta = 0.03, phi = 0.03)
             samplethickness = 0.0005
 
             # the code which computes the "measurable" E,dq points is not perfect and sometimes produces points which don't work; hence we "try" to use these points

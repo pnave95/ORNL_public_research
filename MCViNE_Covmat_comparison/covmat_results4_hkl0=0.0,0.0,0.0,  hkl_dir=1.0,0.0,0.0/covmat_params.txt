@@ -1,13 +1,15 @@
 Covariance matrix calculation parameters used to produced these results:
 
-tofwidths: P=10.8, M=7.2
-beamdivs: theta=0.018, phi=0.018
+tofwidths: P=12, M=6
+beamdivs: theta=0.03, phi=0.03
 samplethickness = 0.0005
 
 
 
 "Error" (distance between 'covmat' method covariance matrices, using these parameters, and the inferred covariance matrices from the mcvine resolution simulations):
 
-avg_dist = 1444.9
-min_dist = 6.3
-max_dist = 5192.0
+avg_dist = 1376.39
+min_dist = 44.79
+max_dist = 5233.23
+
+

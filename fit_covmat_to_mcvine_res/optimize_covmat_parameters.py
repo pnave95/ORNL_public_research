@@ -259,11 +259,12 @@ if __name__ == '__main__':
 	os.chdir(workdir)
 
 	#paramList = [[10, 8], [0.01, 0.01], 0.0015]
-	paramList = [10.5, 7.5, 0.015, 0.015, 0.0005]
+	#paramList = [10.5, 7.5, 0.015, 0.015, 0.0005]
+	paramList = [12, 6, 0.03, 0.03, 0.0005]
 	originalParamList = np.copy(np.array(paramList))
 	#paramHalfSteps = [[0.05, 0.05], [0.0005, 0.0005], 0.0001]
 	paramHalfSteps = [0.05, 0.05, 0.0005, 0.0005, 0.0001]
-	numIters = 10
+	numIters = 1
 	hkl_dir = np.array([1, 0, 0])
 	#_covmat_mcvine_loss(paramList, hkl_dir)
 	results = _optimize_parameters(numIters, paramList, paramHalfSteps, hkl_dir)
