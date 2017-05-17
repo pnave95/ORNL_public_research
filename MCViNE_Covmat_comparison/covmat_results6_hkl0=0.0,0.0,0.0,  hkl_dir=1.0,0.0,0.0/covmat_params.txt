@@ -1,0 +1,10 @@
+Covariance matrix calculation parameters used to produced these results:
+
+tofwidths: P=10, M=8
+beamdivs: theta=0.01, phi=0.01
+samplethickness = 0.0015
+L_m2s = 8.1
+L_m2fc = 9.41
+
+
+

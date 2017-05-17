@@ -13,13 +13,13 @@ sampleyml = "Si.yml"
 
 
 # Instrument
-instrument = use_covmat.instrument(
-    name = 'ARCS',
-    detsys_radius = "3.*meter",
-    L_m2s = "13.6*meter",
-    L_m2fc = "11.61*meter",
-    offset_sample2beam = "-0.15*meter" # offset from sample to saved beam
-    )
+# instrument = use_covmat.instrument(
+#     name = 'ARCS',
+#     detsys_radius = "3.*meter",
+#     L_m2s = "13.6*meter",
+#     L_m2fc = "11.61*meter",
+#     offset_sample2beam = "-0.15*meter" # offset from sample to saved beam
+#     )
 pixel = use_covmat.pixel(
     radius = "0.5*inch",
     height = "meter/128",
@@ -124,6 +124,21 @@ def _covmat_mcvine_loss(paramList, hkl_dir_passed):
 
 	#samplethickness = paramList[2]
 	samplethickness = paramList[4]
+
+	L_m2s_passed = paramList[5]
+	L_m2fc_passed = paramList[6]
+	
+
+	# instrument
+	instrument = use_covmat.instrument(
+    name = 'ARCS',
+    detsys_radius = "3.*meter",
+    #L_m2s = "13.6*meter",
+    L_m2s = str(L_m2s_passed) + "*meter",
+    #L_m2fc = "11.61*meter",
+    L_m2fc = str(L_m2fc_passed) + "*meter",
+    offset_sample2beam = "-0.15*meter" # offset from sample to saved beam
+    )
 
 
 	# iterate through all or several Ei,E,q points, computing the "covmat" method covariance matrix at each point; for each, compare to an (already completed) mcvine resolution simulation ellipse and compute the loss/error
@@ -260,11 +275,11 @@ if __name__ == '__main__':
 
 	#paramList = [[10, 8], [0.01, 0.01], 0.0015]
 	#paramList = [10.5, 7.5, 0.015, 0.015, 0.0005]
-	paramList = [12, 6, 0.03, 0.03, 0.0005]
+	paramList = [12, 6, 0.03, 0.03, 0.0005, 13.6, 11.61]
 	originalParamList = np.copy(np.array(paramList))
 	#paramHalfSteps = [[0.05, 0.05], [0.0005, 0.0005], 0.0001]
-	paramHalfSteps = [0.05, 0.05, 0.0005, 0.0005, 0.0001]
-	numIters = 1
+	paramHalfSteps = [0.05, 0.05, 0.0005, 0.0005, 0.0001, 0.05, 0.02]
+	numIters = 10
 	hkl_dir = np.array([1, 0, 0])
 	#_covmat_mcvine_loss(paramList, hkl_dir)
 	results = _optimize_parameters(numIters, paramList, paramHalfSteps, hkl_dir)
