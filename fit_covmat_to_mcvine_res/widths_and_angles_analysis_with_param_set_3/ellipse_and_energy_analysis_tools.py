@@ -538,7 +538,7 @@ if __name__ == '__main__':
 	#os.chdir(workdir)
 
 	#paramList = [10., 8., 0.01, 0.01, 0.0015, 13.6, 11.41]
-	paramList = [12., 6., 0.03, 0.03, 0.0005, 0.0005, 13.6, 11.61]  # second parameter set
+	paramList = [12., 6., 0.03, 0.03, 0.0005, 0.0005, 13.6, 11.41]  # second parameter set
 	hkl_dir = np.array([1, 0, 0])
 	#Ei = 125.0
 	Ei = 125.0

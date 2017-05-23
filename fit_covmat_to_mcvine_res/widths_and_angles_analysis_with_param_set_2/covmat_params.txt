@@ -1,0 +1,5 @@
+Covariance matrix calculation parameters used to produce these results:
+
+paramList = [12., 6., 0.03, 0.03, 0.0005, 0.0005, 13.6, 11.41]
+
+
