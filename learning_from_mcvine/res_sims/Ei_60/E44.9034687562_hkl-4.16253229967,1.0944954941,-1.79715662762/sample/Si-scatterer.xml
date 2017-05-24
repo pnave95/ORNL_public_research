@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE scatterer>
+
+<!-- weights: absorption, scattering, transmission -->
+<homogeneous_scatterer 
+  mcweights="0, 1, 0.1"
+  max_multiplescattering_loops="3"
+  >
+  
+  <KernelContainer average="yes">
+
+
+    <!-- DGS resolution kernel
+      target-position: target position. example: 2.87121987*meter,0.*meter,8.69538059e-01*meter
+      target-radius: rough estimate of target radius
+      tof-at-target: TOF at target
+      dtof: TOF width thru target
+     -->
+    <DGSSXResKernel
+        target-position="2.8823846895*meter,-0.633931781734*meter,0.831780320583*meter"
+        target-radius="0.0146158829622*meter"
+        tof-at-target="5791.71591179*microsecond"
+        dtof="16.8821439807*microsecond"
+        />
+
+    
+  </KernelContainer>
+  
+</homogeneous_scatterer>
