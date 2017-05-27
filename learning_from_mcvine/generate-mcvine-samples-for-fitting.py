@@ -177,7 +177,7 @@ if __name__ == '__main__':
 	xo = sxio.loadXtalOriFromSampleYml('Si.yml')
 
 	Eis = [30.0, 60.0, 125.0, 250.0, 500.0, 1000.0]
-	N_samples = 10
+	N_samples = 100
 
 
 
