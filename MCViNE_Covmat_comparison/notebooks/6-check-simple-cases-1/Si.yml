@@ -1,0 +1,15 @@
+name: Si
+chemical_formula: Si2
+lattice: 
+ constants: 1, 1, 1, 90, 90, 90
+ basis_vectors:
+  - 1, 0, 0
+  - 0, 1, 0
+  - 0, 0, 1
+excitations:
+ - type: DGSresolution
+orientation:
+ u: 0, 0, 1
+ v: 1, 0, 0
+shape: block width="2*inch" height="4.*inch" thickness="1*mm"
+temperature: 100*K

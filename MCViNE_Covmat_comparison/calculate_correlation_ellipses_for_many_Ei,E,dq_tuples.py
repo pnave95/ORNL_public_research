@@ -4,13 +4,15 @@
 
 # Tools
 import mcvine.cli
-from mcvine_workflow.singlextal.resolution import use_covmat, use_res_comps
+#from mcvine_workflow.singlextal.resolution import use_covmat, use_res_comps
+from mcvine_workflow.singlextal.resolution import use_res_comps
+import use_covmat_debugged as use_covmat 
 #import COPIEDFROM_mcvine_unstable_use_covmat as use_covmat  # Debugging purposes
 import numpy as np
 import histogram as H, histogram.hdf as hh
 
 from matplotlib import pyplot as plt
-import pandas as pd
+#import pandas as pd
 import os
 
 import find_E_Q_pairs_for_various_Ei as get_Eq_pairs
@@ -25,10 +27,10 @@ sampleyml = "Si.yml"
 instrument = use_covmat.instrument(
     name = 'ARCS',
     detsys_radius = "3.*meter",
-    #L_m2s = "13.6*meter",
-    L_m2s = "8.1*meter",
-    #L_m2fc = "11.61*meter",
-    L_m2fc = "9.41*meter",
+    L_m2s = "13.6*meter",
+    #L_m2s = "8.1*meter",
+    L_m2fc = "11.61*meter",
+    #L_m2fc = "9.41*meter",
     offset_sample2beam = "-0.15*meter" # offset from sample to saved beam
     )
 pixel = use_covmat.pixel(
@@ -44,7 +46,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
     # make a directory to record all results
     workdir = os.getcwd()  # current working directory
-    newdir = "covmat_results6_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
+    newdir = "covmat_results_debugged_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
     newdirpath = workdir + "/" + newdir
 
     try:
@@ -135,10 +137,10 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
     # create Pandas dataframe to store data and save as a csv file
     data = np.array(data)
     print "data.shape = " + str(data.shape)
-    df = pd.DataFrame(data=data, columns=['Ei', 'E', 'dq', 'E_width'])
-    localpath = newdir + "/covmat_data.csv"
+    #df = pd.DataFrame(data=data, columns=['Ei', 'E', 'dq', 'E_width'])
+    #localpath = newdir + "/covmat_data.csv"
     #df.to_csv('covmat_data.csv', index=False)
-    df.to_csv(localpath, index=False)
+    #df.to_csv(localpath, index=False)
 
 
     # plot E vs Ewidth for each value of Ei
@@ -155,7 +157,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
         plt.savefig(figpath)
 
 
-    return df
+    #return df
 
 
 
@@ -168,4 +170,5 @@ if __name__ == '__main__':
     hkl0 = np.array([0., 0., 0.])
     hkl_dir = np.array([1.,0.,0.])
 
-    df = _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)
+    #df = _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)
+    _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)
