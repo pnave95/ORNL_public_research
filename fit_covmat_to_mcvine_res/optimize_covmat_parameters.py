@@ -1,7 +1,8 @@
 #  The purpose of this code is to optimize the parameters for the covariance resolution calculation by fitting the produced covariance matrix to the covariance matrix of the mcvine resolution simulation data
 
 import numpy as np
-import use_covmat
+#import use_covmat
+import use_covmat_debugged as use_covmat
 import compute_mcvine_res_sim_covmat
 import os
 import glob
@@ -275,10 +276,11 @@ if __name__ == '__main__':
 
 	#paramList = [[10, 8], [0.01, 0.01], 0.0015]
 	#paramList = [10.5, 7.5, 0.015, 0.015, 0.0005]
-	paramList = [12, 6, 0.03, 0.03, 0.0005, 13.6, 11.61]
+	#paramList = [12, 6, 0.03, 0.03, 0.0005, 13.6, 11.61]
+	paramList = [10., 8., 0.015, 0.015, 0.0015, 13.6, 11.41]
 	originalParamList = np.copy(np.array(paramList))
 	#paramHalfSteps = [[0.05, 0.05], [0.0005, 0.0005], 0.0001]
-	paramHalfSteps = [0.05, 0.05, 0.0005, 0.0005, 0.0001, 0.05, 0.02]
+	paramHalfSteps = [0.05, 0.05, 0.0005, 0.0005, 0.0001, 0.01, 0.01]
 	numIters = 10
 	hkl_dir = np.array([1, 0, 0])
 	#_covmat_mcvine_loss(paramList, hkl_dir)
