@@ -193,7 +193,7 @@ def compute(
     print "R=", R
     print "Q=", Q
 
-    eeta = np.arctan2(Q[1], Q[0])
+    eeta = np.arctan2(kfv[1], kfv[0])
     print "eeta=", eeta
 
     pQx_pt = -m/hbar*(L_PM/ti/ti/mus/mus*cos(thetai)*cos(phii)
