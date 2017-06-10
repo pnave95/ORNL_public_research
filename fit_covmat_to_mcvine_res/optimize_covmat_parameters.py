@@ -281,7 +281,7 @@ if __name__ == '__main__':
 	originalParamList = np.copy(np.array(paramList))
 	#paramHalfSteps = [[0.05, 0.05], [0.0005, 0.0005], 0.0001]
 	paramHalfSteps = [0.05, 0.05, 0.0005, 0.0005, 0.0001, 0.01, 0.01]
-	numIters = 10
+	numIters = 1
 	hkl_dir = np.array([1, 0, 0])
 	#_covmat_mcvine_loss(paramList, hkl_dir)
 	results = _optimize_parameters(numIters, paramList, paramHalfSteps, hkl_dir)
