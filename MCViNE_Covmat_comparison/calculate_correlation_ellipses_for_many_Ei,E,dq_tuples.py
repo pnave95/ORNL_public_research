@@ -48,7 +48,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
 
     # make a directory to record all results
     workdir = os.getcwd()  # current working directory
-    newdir = "covmat_results_debugged_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
+    newdir = "covmat_results_debugged3_hkl0=" + str(hkl0_passed[0]) + "," + str(hkl0_passed[1]) + "," + str(hkl0_passed[2]) + ",  hkl_dir=" + str(hkl_dir_passed[0]) + "," + str(hkl_dir_passed[1]) + "," + str(hkl_dir_passed[2])
     newdirpath = workdir + "/" + newdir
 
     try:
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     #hkl_dir = np.array([-1.,1.,-1.])
 
     hkl0 = np.array([0., 0., 0.])
-    hkl_dir = np.array([1.,0.,0.])
+    hkl_dir = np.array([1.,0.,0.1])
 
     #df = _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)
     _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)
