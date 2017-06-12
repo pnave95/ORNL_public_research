@@ -412,6 +412,7 @@ def compute(
         # plt.ylim(-5., 5.)
         plt.show()
     # ellipsoid coordinates, eigen vectors and eigen values of the scaled inverse covariance
-    return u, mR, lambdas
+    #return u, mR, lambdas
+    return dict(u=u, mR=mR, lambdas=lambdas, cov=cov)
 
 

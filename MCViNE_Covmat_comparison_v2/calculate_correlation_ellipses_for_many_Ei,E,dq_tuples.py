@@ -114,18 +114,28 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
                 # u is a list of points to plot
                 # mR holds both eigenvectors for the covariance matrix
                 # lambdas are eigenvalues of the covariance matrix
+                '''
                 u, mR, lambdas = use_covmat.compute(
                     sampleyml, Ei, dynamics, scan,
                     instrument, pixel,
                     tofwidths, beamdivs, samplethickness,
                     plot=False)
-
+                '''
+                cm_res = use_covmat.compute(
+                    sampleyml, Ei, dynamics, scan,
+                    instrument, pixel,
+                    tofwidths, beamdivs, samplethickness,
+                    plot=False)
+                u = cm_res['u']
+                mR = cm_res['mR']
+                lambdas = cm_res['lambdas']
+                
                 plt.figure()
                 plt.plot(u[:,0], u[:,1], '.')
                 figtitle = "covmat_ellipse_Ei=" + str(Ei) + ", E=" + str(dynamics.E) + ", dq=" + str(dynamics.dq) + ".png"
                 figpath = newdir + "/" + figtitle
                 plt.savefig(figpath)
-
+                
                 # debug:
                 # print "Ei, E, dq = " + str(Ei) + ", " + str(dynamics.E) + ", " + str(dynamics.dq) + ".  Unscaled covariance matrix: \n"
                 # print cov
@@ -156,7 +166,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
     #df.to_csv('covmat_data.csv', index=False)
     #df.to_csv(localpath, index=False)
 
-
+    
     # plot E vs Ewidth for each value of Ei
     for Ei in EiValues:
         relevant_points = data[data[:,0] == Ei]  # this extracts all points for a given Ei value
@@ -169,7 +179,7 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
         figtitle = "Energy vs Energy Width for Ei=" + str(Ei) + ".png"
         figpath = newdir + "/" + figtitle
         plt.savefig(figpath)
-
+    
 
     #return df
 
