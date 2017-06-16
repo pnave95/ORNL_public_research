@@ -105,9 +105,10 @@ def _get_valid_E_Q_points(EiValues, hkl0_passed, hkl_dir_passed):
             #samplethickness = 0.0015
 
             # compute covariance matrix (with revised parameters)
-            tofwidths = use_covmat.tofwidths(P=10,M=8)
-            beamdivs = use_covmat.beamdivs(theta = 0.01, phi = 0.01)
-            samplethickness = 0.0015
+            tofwidths = use_covmat.tofwidths(P=11.2874,M=6.9908)
+            beamdivs = use_covmat.beamdivs(theta = 0.0020705, phi = 0.0114589)
+            samplethickness = 0.004168
+
 
             # the code which computes the "measurable" E,dq points is not perfect and sometimes produces points which don't work; hence we "try" to use these points
             try:
