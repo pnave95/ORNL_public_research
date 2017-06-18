@@ -193,7 +193,7 @@ if __name__ == '__main__':
     #hkl_dir = np.array([-1.,1.,-1.])
 
     hkl0 = np.array([0., 0., 0.])
-    hkl_dir = np.array([1.,0.,0.])
+    hkl_dir = np.array([0.,0.,1.])
 
     #df = _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)
     _get_valid_E_Q_points(Ei_Values, hkl0, hkl_dir)

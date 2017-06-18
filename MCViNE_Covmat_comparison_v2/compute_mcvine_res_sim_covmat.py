@@ -6,6 +6,7 @@ import histogram as H, histogram.hdf as hh
 from matplotlib import pyplot as plt
 import glob  # unix style pathname pattern matching
 import os
+import h5py as hf
 
 
 def _get_mcvine_res_sim_covmat(resfile):
@@ -149,6 +150,55 @@ def _iterate_plotting():
 
 	return dirs
 
+
+# must supply the directory with the mcvine result files and the current working directory
+def _compute_res_sim_inv_covmat_4D(mcvine_dir, workdir):
+
+	# change into mcvine directory
+	os.chdir(mcvine_dir)
+	
+	# get mcvine-simulated data
+
+	dhkls = np.load('dhkls.npy')
+	dEs = np.load('dEs.npy')
+	probs = np.load('probs.npy')
+
+	# collect metadata (simulation parameters)
+	f = hf.File('parameters.h5', 'r')
+	E = f.get("E")
+	E = np.array(E)
+	E = E[0]
+	Ei = f.get("Ei")
+	Ei = np.array(Ei)
+	Ei = Ei[0]
+	hkl = f.get("hkl")
+	hkl = np.array(hkl)
+	hkl_dir = f.get("hkl_dir")
+	hkl_dir = np.array(hkl_dir)
+
+	params = [E, Ei, hkl, hkl_dir]
+
+	# change back to working directory
+	os.chdir(workdir)
+
+	dhs,dks,dls = dhkls.T
+	dhs_np = np.array(dhs)
+	dks_np = np.array(dks)
+	dls_np = np.array(dls)
+	dEs_np = np.array(dEs)
+
+
+	# mask outliers
+	mask = (dhs_np > -2.)*(dhs_np < 2.)* (dks_np > -2.)*(dks_np < 2.)* (dls_np > -2.)*(dls_np < 2.)
+	
+	Data = np.array([dhs_np[mask], dks_np[mask], dls_np[mask], dEs_np[mask]])
+
+	mcvine_cov = np.cov(Data, aweights=probs[mask])
+	mcvine_inv_cov = np.linalg.inv(mcvine_cov)	
+
+
+
+	return [mcvine_inv_cov, params]
 
 
 if __name__ == '__main__':
