@@ -140,8 +140,10 @@ def _get_inv_covmat_list(dynamics_params_list, paramList):
 	print "numFailures = " + str(numFailures)
 	return inv_covmat_list
 
-
-def _get_mat_errors(mcv_inv_covmats, inv_covmats, dynamics_params):
+'''
+if use_inverse==True, then the inverse covariance matrices will be used to compute the matrix difference.  If False, then the covariance matrices from mcvine and the covmat method will be used directly to compute the matrix difference (the error)
+'''
+def _get_mat_errors(mcv_inv_covmats, inv_covmats, dynamics_params, use_inverse=True):
 
 	errs = []
 	mcv_inv_covmats_revised = []
@@ -159,6 +161,12 @@ def _get_mat_errors(mcv_inv_covmats, inv_covmats, dynamics_params):
 			dynamics_params_revised.append(dynamics)
 
 			err = optimize_covmat_params_for_single_hardcoded_pt._matrixDifference(mcv, cov)
+
+			if use_inverse==False:
+				cov_standard = np.linalg.inv(cov)
+				mcv_standard = np.linalg.inv(mcv)
+				err = optimize_covmat_params_for_single_hardcoded_pt._matrixDifference(mcv_standard, cov_standard)
+
 			errs.append(err)
 
 	return [errs, dynamics_params_revised, mcv_inv_covmats_revised, inv_covmats_revised]
@@ -330,7 +338,8 @@ if __name__ == '__main__':
 	list_of_mats, list_of_params = _list_mcvine_inv_covmats(mcvine_dir, workdir)
 
 	# define covmat parameters and run the covmat computations
-	paramList = [11.28741, 6.9908, 0.4406, 0.0078, 0.004, 0.00207, 0.0114589]
+	#paramList = [11.28741, 6.9908, 0.4406, 0.0078, 0.004, 0.00207, 0.0114589]
+	paramList = [7.0750576, 6.2124, 0.30695, 0.0062777, 0.000201275, 0.04274, 0.027485]
 	list_inv_covmats = _get_inv_covmat_list(list_of_params, paramList)
 
 	errs, dynamics_params, mcv_mats, cov_mats = _get_mat_errors(list_of_mats, list_inv_covmats, list_of_params)
@@ -353,5 +362,5 @@ if __name__ == '__main__':
 	E, Ei, hkl, hkl_dir = dynamics_params[0]
 	_plot_three_directions(M, N, Ei, E, hkl)
 
-	plotdir = "covmat_vs_mcv_plots"
+	plotdir = "covmat_vs_mcv_plots_2"
 	_plot_all_results(mcv_mats, cov_mats, dynamics_params, plotdir)

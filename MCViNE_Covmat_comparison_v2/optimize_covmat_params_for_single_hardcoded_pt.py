@@ -541,9 +541,15 @@ def get_covmat_from_params(paramList):
 	return InvCov4D
 	
 
-def _ga_cost(paramList):
+def _ga_cost(paramList, use_inverse=False):
 	inverse_covmat = get_covmat_from_params(paramList)
 	err = _matrixDifference(inverse_covmat, mcvine_inv_cov)
+
+	if use_inverse==False:
+		mcv = np.linalg.inv(mcvine_inv_cov)
+		cov = np.linalg.inv(inverse_covmat)
+		err = _matrixDifference(mcv, cov)
+
 	return err
 
 def writable_parameter_string(iterNum, paramList, err):
@@ -683,8 +689,17 @@ if __name__ == '__main__':
 	new_params = [11.28741, 6.9908, 0.4406, 0.00282, 0.004, 0.0020705462, 0.0114589]
 	test2_params = [11.28741, 6.9908, 0.4406, 0.0078, 0.004, 0.00207, 0.0114589]
 
-	#optimized_params = _optimize_params_with_ga(new_params, param_constraints)
+	optimized_params = _optimize_params_with_ga(new_params, param_constraints)
 
+	new_inv_covmat = get_covmat_from_params(new_params)
+	new_err = _matrixDifference(new_inv_covmat, mcvine_inv_cov)
+	opt_inv_covmat = get_covmat_from_params(optimized_params)
+	opt_err = _matrixDifference(opt_inv_covmat, mcvine_inv_cov)
+
+	print "new_err = " + str(new_err)
+	print "opt_err = " + str(opt_err)
+
+'''
 	test_inv_covmat = get_covmat_from_params(test2_params)
 	#opt_inv_covmat = get_covmat_from_params(optimized_params)
 	test_err = _matrixDifference(test_inv_covmat, mcvine_inv_cov)
@@ -697,7 +712,7 @@ if __name__ == '__main__':
 	print mcvine_inv_cov
 	print "covmat: "
 	print test_inv_covmat
-
+'''
 	#optimized_params = optimize_parameters(new_params, steps, mcvine_inv_cov, covmat_inv_cov, epsilon, maxIters)
 
 
